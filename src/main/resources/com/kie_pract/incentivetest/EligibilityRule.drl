@@ -1,0 +1,30 @@
+package com.kie_pract.incentivetest;
+
+import java.lang.Math.*;
+
+rule "SalesPersonEligibilityCheckTru"
+//ruleflow-group "Test1"
+salience 2
+when
+$R:EligibilityTest( $B:projectPrice,$B>$D:(10* (3* (primarySalesPersonCTC / 12) )))
+then
+System.out.println(" Quarterly 10 times CTC: " +$D);
+System.out.println(" Project Price: " +$B);
+$R.setIncentiveEligible(true);
+end
+
+
+rule "SalesPersonEligibilityCheckFalse"
+//ruleflow-group "Test1"
+salience 2
+when
+$R:EligibilityTest( $B:projectPrice,$B<$D:(10* (3* (primarySalesPersonCTC / 12) )))
+then
+System.out.println(" Quarterly 10 times CTC: " +$D);
+System.out.println(" Project Price: " +$B);
+$R.setIncentiveEligible(false);
+end
+
+
+
+

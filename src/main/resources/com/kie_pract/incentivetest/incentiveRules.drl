@@ -1,0 +1,83 @@
+package com.kie_pract.incentivetest;
+
+import java.lang.Math.*;
+
+//////////////// Lead Owner /////////////////
+rule "CalculateIncentiveLeadOwner"
+//ruleflow-group "Test"
+salience 3
+when
+$R:IncentiveTest(  $H:incentiveEligible  , $M:incentTypes,$M.equals("LO")  ,$H.equals("Yes"),$D:(payment*(2/100)))
+then
+$R.setIncen($D);
+System.out.println("Lead Owner Incentive: "+$D);
+end
+
+
+///////////////////  Assistance Lead Owner  ///////////////
+rule "CalculateIncentiveAssistanceLeadOwner"
+//ruleflow-group "Test"
+salience 3
+when
+$R:IncentiveTest($H:incentiveEligible  , $M:incentTypes,   $M.equals("ALO") ,$H.equals("Yes"),$D:(payment*(1/100)))
+then
+$R.setIncen($D);
+System.out.println("Assistance Lead Owner Incentive: "+$D);
+end
+
+////////////////////  Contract Renewal ///////////////////
+rule "CalculateIncentiveContractRenewal"
+//ruleflow-group "Test"
+salience 3
+when
+$R:IncentiveTest($H:incentiveEligible  , $M:incentTypes, $M.equals("CR")  ,$H.equals("Yes"),$D:(payment*(1/100)))
+then
+$R.setIncen($D);
+System.out.println("Contract Renewal Incentive: "+$D);
+end
+
+
+
+
+rule "CalculateIncentiveNotEligible"
+//ruleflow-group "Test"
+salience 3
+when
+$R:IncentiveTest(incentiveEligible.equals("No") )
+then
+$R.setIncen(0000.00);
+System.out.println("Not Eligible for Incentive");
+end
+
+
+
+rule "CalculateIncentiveNotEligibleLO"
+//ruleflow-group "Test"
+salience 3
+when
+$R:IncentiveTest(incentTypes.equals("LO"),incentiveEligible.equals("No") )
+then
+$R.setIncen(0000.00);
+System.out.println("Not Eligible for Incentive");
+end
+
+rule "CalculateIncentiveNotEligibleALO"
+//ruleflow-group "Test"
+salience 3
+when
+$R:IncentiveTest(incentTypes.equals("ALO"),incentiveEligible.equals("No") )
+then
+$R.setIncen(0000.00);
+System.out.println("Not Eligible for Incentive");
+end
+
+
+rule "CalculateIncentiveNotEligibleCR"
+//ruleflow-group "Test"
+salience 3
+when
+$R:IncentiveTest(incentTypes.equals("CR"),incentiveEligible.equals("No") )
+then
+$R.setIncen(0000.00);
+System.out.println("Not Eligible for Incentive");
+end
